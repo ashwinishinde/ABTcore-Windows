@@ -1,0 +1,305 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2.4. Transaction management &mdash; Aakash Business Tool 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Aakash Business Tool 1.0 documentation" href="../index.html" />
+    <link rel="up" title="2. How to Operate" href="how_to_operate.html" />
+    <link rel="next" title="2.5. Reports" href="Reports.html" />
+    <link rel="prev" title="2.3. Account management" href="Account_management.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Reports.html" title="2.5. Reports"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Account_management.html" title="2.3. Account management"
+             accesskey="P">previous</a> |</li>
+        <li><a href="user_guide.html">Aakash Business Tool 1.0 documentation</a> &raquo;</li>
+          <li><a href="how_to_operate.html" accesskey="U">2. How to Operate</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="section" id="transaction-management">
+<h1>2.4. Transaction management<a class="headerlink" href="#transaction-management" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>This chapter provides guidence to <tt class="docutils literal"><span class="pre">add/search/edit/copy/delete</span></tt> transaction.</li>
+<li>Go to <tt class="docutils literal"><span class="pre">Master</span> <span class="pre">menu</span></tt> &gt; <tt class="docutils literal"><span class="pre">Create</span> <span class="pre">voucher</span></tt>.</li>
+</ul>
+<div class="section" id="how-to-pass-a-transaction">
+<h2>2.4.1. How to pass a transaction<a class="headerlink" href="#how-to-pass-a-transaction" title="Permalink to this headline">¶</a></h2>
+<p>Below table will help the user to understand, <tt class="docutils literal"><span class="pre">voucher</span> <span class="pre">types</span></tt> and their respective accounts as per rule:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="28%" />
+<col width="35%" />
+<col width="37%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Voucher type</th>
+<th class="head">Accounts(dr)</th>
+<th class="head">Accounts(cr)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Contra</td>
+<td>subgroup(Cash,Bank)</td>
+<td>subgroup(Cash,Bank)</td>
+</tr>
+<tr class="row-odd"><td>Journal</td>
+<td><strong>except</strong> subgroup(Cash,Bank)</td>
+<td><strong>except</strong> subgroup(Cash,Bank)</td>
+</tr>
+<tr class="row-even"><td>Receivable</td>
+<td>subgroup(Cash,Bank)</td>
+<td><strong>except</strong> subgroup(Cash,Bank)</td>
+</tr>
+<tr class="row-odd"><td>Payment</td>
+<td><strong>except</strong> subgroup(Cash,Bank)</td>
+<td>subgroup(Cash,Bank)</td>
+</tr>
+<tr class="row-even"><td rowspan="2">Debit Note</td>
+<td rowspan="2"><dl class="first last docutils">
+<dt>subgroup(Sundry Creditors for Expense</dt>
+<dd>,Sundry Creditors for Purchase)</dd>
+</dl>
+</td>
+<td rowspan="2"><dl class="first last docutils">
+<dt>group(Direct Income,Indirect Expense,</dt>
+<dd>Fixed Assets)</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="2">Credit Note</td>
+<td rowspan="2"><dl class="first last docutils">
+<dt>groupname(Direct Income,Indirect</dt>
+<dd>Income)</dd>
+</dl>
+</td>
+<td rowspan="2">subgroup(Sundry Debtors)</td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td>Sales</td>
+<td>subgroup(Cash,Bank,Sundry Debtors)</td>
+<td>groupname(Direct Income,Indirect Income)</td>
+</tr>
+<tr class="row-odd"><td rowspan="2">Purchase</td>
+<td rowspan="2"><dl class="first last docutils">
+<dt>groupname(Direct Expense,Indirect</dt>
+<dd>Expense)</dd>
+</dl>
+</td>
+<td rowspan="2">subgroup(Sundry Creditors for Expense,
+Sundry Creditors for Purchase,Bank,Cash)</td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="2">Sales Return</td>
+<td rowspan="2"><dl class="first last docutils">
+<dt>groupname(Direct Expense,Indirect</dt>
+<dd>Expense)</dd>
+</dl>
+</td>
+<td rowspan="2">subgroup(Sundry Debtors)</td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="2">Purchase Returns</td>
+<td rowspan="2"><dl class="first last docutils">
+<dt>subgroup(Sundry Creditors for Expense</dt>
+<dd>,Sundry Creditors for Purchase)</dd>
+</dl>
+</td>
+<td rowspan="2"><dl class="first last docutils">
+<dt>groupname(Direct Income,Indirect</dt>
+<dd>Income)</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"></tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>To record transaction in <tt class="docutils literal"><span class="pre">ABT</span></tt>, select <tt class="docutils literal"><span class="pre">Create</span> <span class="pre">voucher</span></tt> tab (see bellow fig.) and follow the below steps:</p>
+<img alt="../_images/create_voucher1.png" class="align-center" id="abt-main-page" src="../_images/create_voucher1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>The journal entry has been designed with user-friendliness in mind, with a
+default chart of accounts as a starting point. However, you have to create
+at least two accounts to start any transaction. It also offers every
+opportunity for creating your own user-defined variations.</li>
+<li>Select the mode of transaction from the list of voucher type. <tt class="docutils literal"><span class="pre">Mode</span></tt> of transaction
+can be Contra, Journal, Payment, Receipt, Debit Note, Credit Note, Sales,
+Sales Return, Purchase, Purchase Return.</li>
+</ul>
+<img alt="../_images/voucher_type1.png" class="align-center" id="id1" src="../_images/voucher_type1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Voucher Date - date on which the transaction is happened.</li>
+<li><strong>Note</strong>: ABT sets financial date as Voucher date, if no transaction is recorded before.
+If any transaction is previously recorded,it sets the voucher date of the previous transaction
+of the respective voucher type. If the date is changed, it updates the bydefault date or previous
+date with the new date.</li>
+<li>Project - The project module is organized with project-based work processes
+in mind. This module is also closely integrated with other modules in the
+program. The Project register can be opened by going to Ledger -Select
+project name- View.</li>
+<li>Select the Account name for Dr and Cr side. It will automatically show the
+closing balances for both the account name. Debit balance are highlighted
+in Green color and Credit balances are highlighted in Red color.</li>
+<li>Default focus helps you make voucher entry more efficient. For example, If you register
+a journal item in journal entry, the setting will guide you to the correct
+field. This is set based on the Accounting Principles, <tt class="docutils literal"><span class="pre">Debit</span> <span class="pre">what</span> <span class="pre">comes</span> <span class="pre">in;</span>
+<span class="pre">credit</span> <span class="pre">what</span> <span class="pre">goes</span> <span class="pre">out,</span> <span class="pre">Debit</span> <span class="pre">the</span> <span class="pre">receiver;</span> <span class="pre">Credit</span> <span class="pre">the</span> <span class="pre">Giver,</span> <span class="pre">Debit</span> <span class="pre">All</span>
+<span class="pre">Expenses</span> <span class="pre">and</span> <span class="pre">losses;</span> <span class="pre">Credit</span> <span class="pre">all</span> <span class="pre">incomes</span> <span class="pre">and</span> <span class="pre">gains</span></tt>.</li>
+<li>This also helps in selecting multiple debit or credit sides using <tt class="docutils literal"><span class="pre">plus</span></tt> button.</li>
+<li>Amount - enter the amount.</li>
+<li>Voucher number - Its a unique key for all the transaction.</li>
+<li>Voucher Reference number - Many transaction can have a single voucher reference number.</li>
+<li>Voucher Narration - Narration for a particular transaction.</li>
+<li>Press <tt class="docutils literal"><span class="pre">Save</span></tt> to save transaction.</li>
+</ul>
+<p>After saving transaction it resets all the fields automatically.</p>
+<p>You can change the voucher type if you want to make different voucher entries.</p>
+<p>Press <tt class="docutils literal"><span class="pre">Reset</span></tt> to clear all fields.</p>
+<p>To indicate the transfer of funds from cash to bank, bank to bank and bank to cash
+<strong>contra</strong> type is used.</p>
+</div>
+<div class="section" id="search-edit-clone-delete-transaction">
+<h2>2.4.2. Search/Edit/Clone/Delete Transaction<a class="headerlink" href="#search-edit-clone-delete-transaction" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>To <tt class="docutils literal"><span class="pre">Edit/Clone/Delete</span></tt> transaction select <tt class="docutils literal"><span class="pre">Search</span> <span class="pre">voucher</span></tt> tab.</li>
+</ul>
+<img alt="../_images/search_voucher1.png" class="align-center" id="id2" src="../_images/search_voucher1.png" style="width: 350pt; height: 200pt;" />
+<img alt="../_images/search_voucher_by1.png" class="align-center" src="../_images/search_voucher_by1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Here Search option is given to search a particular transaction or group of
+transactions by <tt class="docutils literal"><span class="pre">Voucher</span> <span class="pre">reference</span> <span class="pre">number,</span> <span class="pre">Date,</span> <span class="pre">Narration,</span> <span class="pre">Voucher</span> <span class="pre">number,</span> <span class="pre">Account</span> <span class="pre">name</span> <span class="pre">or</span> <span class="pre">Voucher</span> <span class="pre">type</span></tt>.</li>
+</ul>
+<img alt="../_images/search_voucher_by_options.png" class="align-center" src="../_images/search_voucher_by_options.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>You have several opportunities to view figures based on period
+department and project accounting, key figures and more.</li>
+<li>Select option, give the input and press <tt class="docutils literal"><span class="pre">View</span></tt> button to view the transaction.</li>
+<li>Click table <tt class="docutils literal"><span class="pre">row</span></tt> to Edit/Copy/Delete the transactions.</li>
+</ul>
+<img alt="../_images/edit_voucher_alert.png" class="align-center" src="../_images/edit_voucher_alert.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>In <strong>Edit voucher</strong>, all fields are editable except voucher type and voucher number.
+Press <tt class="docutils literal"><span class="pre">Save</span></tt> to save the changes.</li>
+</ul>
+<img alt="../_images/edit_voucher.png" class="align-center" src="../_images/edit_voucher.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li><strong>Copy voucher</strong> duplicates information on an existing transaction, to create
+a new one with all the fields pre-filled for the same voucher type.
+There is an option to <tt class="docutils literal"><span class="pre">keep</span> <span class="pre">or</span> <span class="pre">change</span></tt> the existing field values. <strong>Note</strong>:
+Change the voucher number, as this is an unique parameter.
+Press <tt class="docutils literal"><span class="pre">Save</span></tt> to save the transaction.</li>
+</ul>
+<img alt="../_images/clone_voucher.png" class="align-center" src="../_images/clone_voucher.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li><strong>Delete voucher</strong>: Press <tt class="docutils literal"><span class="pre">Delete</span></tt> to delete the transaction.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="user_guide.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2.4. Transaction management</a><ul>
+<li><a class="reference internal" href="#how-to-pass-a-transaction">2.4.1. How to pass a transaction</a></li>
+<li><a class="reference internal" href="#search-edit-clone-delete-transaction">2.4.2. Search/Edit/Clone/Delete Transaction</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Account_management.html"
+                        title="previous chapter">2.3. Account management</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Reports.html"
+                        title="next chapter">2.5. Reports</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/user/Recording_transations.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Reports.html" title="2.5. Reports"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Account_management.html" title="2.3. Account management"
+             >previous</a> |</li>
+        <li><a href="user_guide.html">Aakash Business Tool 1.0 documentation</a> &raquo;</li>
+          <li><a href="how_to_operate.html" >2. How to Operate</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, androportal.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

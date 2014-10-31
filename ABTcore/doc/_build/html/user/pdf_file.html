@@ -1,0 +1,654 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>About Aakash Business Tool(ABT) &mdash; Aakash Business Tool 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Aakash Business Tool 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="user_guide.html">Aakash Business Tool 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="about-aakash-business-tool-abt">
+<h1>About Aakash Business Tool(ABT)<a class="headerlink" href="#about-aakash-business-tool-abt" title="Permalink to this headline">¶</a></h1>
+<p><strong>Aakash Business Tool</strong> is a portable accounting platform on Android
+intended for Accountants and Students. <a class="reference external" href="http://aakashlabs.org">Aakash</a> is a low cost computing device/tablet for
+students, the project is initiated and funded by MHRD, Govt. of
+India. Aakash already runs Android 4.0 with many educational <a class="reference external" href="https://github.com/androportal/">apps</a>
+developed at IIT Bombay. Aakash
+Accounting provides an easy to use interface specially for
+students/newbies who have just started accounting. We have tried to
+make the user&#8217;s experience simple and elegant. This initial version
+covers basic account management, creating vouchers and reports.</p>
+<p>It was initially derived from <a class="reference external" href="http://www.gnukhata.org">GNUkhata</a>, a free
+accounting software which is mostly based on Python framework.</p>
+<dl class="docutils">
+<dt>Some features included in Aakash Business Tool:</dt>
+<dd><ol class="first last arabic simple">
+<li>Managing Organizations and User authentication</li>
+<li>Maintaining books of accounts</li>
+<li>Recording, cloning and editing transactions</li>
+<li>Recording of transactions under particular project</li>
+<li>Generating reports such as Ledger Accounts, Trial Balance(Net,
+Gross, Extended), Profit and Loss Account, Project Statement,
+Cash Flow and Balance Sheet(Conventional or Sources of application
+and funds)</li>
+<li>Bank Reconciliation</li>
+<li>Rollover</li>
+<li>Export reports in PDF/CSV format</li>
+<li>Import/Export of organization data to other device</li>
+<li>ABT as a remote server</li>
+</ol>
+</dd>
+</dl>
+</div>
+<div class="section" id="maintaining-organisations">
+<h1>Maintaining organisations<a class="headerlink" href="#maintaining-organisations" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>This article explains maintainance of organisation in <strong>Aakash Business Tool(ABT)</strong>.</li>
+<li>It includes <tt class="docutils literal"><span class="pre">creation</span></tt> of organisation and <tt class="docutils literal"><span class="pre">saving</span></tt> organisation details.</li>
+</ul>
+<div class="section" id="welcome-page">
+<h2>welcome page<a class="headerlink" href="#welcome-page" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">On loading application, it asks for address of the server location such as emulator,
+tablet or remote server. Select <strong>any one</strong> of them.</p>
+<blockquote>
+<div><img alt="../_images/remote_location.png" class="align-center" src="../_images/remote_location.png" style="width: 350pt; height: 200pt;" />
+</div></blockquote>
+</li>
+<li><p class="first">Choose <tt class="docutils literal"><span class="pre">tablet</span></tt> option to run ABT on android device.</p>
+</li>
+<li><p class="first">Android developers can Choose <tt class="docutils literal"><span class="pre">emulator</span></tt> option, to test app or modify ABT source code.</p>
+</li>
+<li><p class="first">On selecting <tt class="docutils literal"><span class="pre">Remote</span> <span class="pre">server</span></tt> for ABT, enter IP address manually.
+It requires a live internet connection, it can be within an Organization
+or an Institute.</p>
+</li>
+<li><p class="first">User can access a centralize remote server running within
+the Institute.</p>
+</li>
+<li><p class="first">The advantage is, each user will have his/her own
+account on the server.</p>
+</li>
+<li><p class="first">The central server runs Postgres as a database engine.</p>
+</li>
+<li><p class="first">Click <tt class="docutils literal"><span class="pre">Apply</span></tt> button and you will see a page contains the features for the
+first screen that displays two buttons, <strong>Create new organisation</strong> and
+<strong>Select existing organisation</strong> at the top.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="setting-up-a-new-organisation">
+<h2>Setting up a new organisation<a class="headerlink" href="#setting-up-a-new-organisation" title="Permalink to this headline">¶</a></h2>
+<p>The first step to get started in <tt class="docutils literal"><span class="pre">ABT</span></tt> is to create an organisation</p>
+<ul class="simple">
+<li>Go to Welcome page of ABT &gt;&gt; Press <tt class="docutils literal"><span class="pre">Create</span> <span class="pre">New</span> <span class="pre">Organisation</span></tt>.</li>
+</ul>
+<img alt="../_images/create_org1.png" class="align-center" src="../_images/create_org1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>To get started with the application, there should be <tt class="docutils literal"><span class="pre">atleast</span> <span class="pre">one</span></tt> organization.</li>
+<li>Type the <tt class="docutils literal"><span class="pre">name</span></tt> of organisation.</li>
+<li>Select the organisation <tt class="docutils literal"><span class="pre">type</span></tt> (NGO or Profit Making).</li>
+<li>Specify the Financial Year <tt class="docutils literal"><span class="pre">From</span></tt> and Financial Year <tt class="docutils literal"><span class="pre">To</span></tt>.</li>
+<li><strong>Note</strong>: ABT provides 1st April to 31st March as the predefined financial year, But user can change the To date <tt class="docutils literal"><span class="pre">manually</span></tt> according to organization&#8217;s rules or requirement. Once the <tt class="docutils literal"><span class="pre">From</span></tt> date is seted, <tt class="docutils literal"><span class="pre">To</span></tt> date gets automatically updated by <tt class="docutils literal"><span class="pre">12</span></tt> months and minus <tt class="docutils literal"><span class="pre">1</span></tt> day.</li>
+<li>Press <tt class="docutils literal"><span class="pre">next</span></tt> to sign up as a user. This will open a promt-box to select the user role such as Admin or guest.</li>
+</ul>
+<img alt="../_images/login.png" class="align-center" src="../_images/login.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Guest user has a default username <tt class="docutils literal"><span class="pre">guest</span></tt> and password is also <tt class="docutils literal"><span class="pre">guest</span></tt>.</li>
+<li>If you select <tt class="docutils literal"><span class="pre">Admin</span></tt>, a new pop-up box will appear on the screen to sign up as an Admin.
+Save details and press <tt class="docutils literal"><span class="pre">Login</span></tt> to continue.</li>
+</ul>
+<img alt="../_images/sign_up.png" class="align-center" src="../_images/sign_up.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Fill the organisation details if required else, press <tt class="docutils literal"><span class="pre">Skip</span></tt>.</li>
+<li>Press the <tt class="docutils literal"><span class="pre">Save</span></tt> button to save the organisation details.</li>
+</ul>
+<img alt="../_images/org_details1.png" class="align-center" src="../_images/org_details1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li><strong>Note</strong>: Organisation will get created by clicking either <tt class="docutils literal"><span class="pre">Save</span></tt> or <tt class="docutils literal"><span class="pre">Skip</span></tt> button.</li>
+<li>Welcome to ABT&#8217;s master menu!</li>
+</ul>
+</div>
+<div class="section" id="select-existing-organisation">
+<h2>Select existing organisation<a class="headerlink" href="#select-existing-organisation" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Go to Welcome page of ABT &gt;&gt; Press <tt class="docutils literal"><span class="pre">Select</span> <span class="pre">New</span> <span class="pre">Organisation</span></tt>.</li>
+<li>It will display the list of Organisations.</li>
+<li>Select the required <tt class="docutils literal"><span class="pre">organisation</span></tt> and respective <tt class="docutils literal"><span class="pre">financial</span> <span class="pre">year</span></tt>.</li>
+<li>Press <tt class="docutils literal"><span class="pre">Next</span></tt>.</li>
+</ul>
+<img alt="../_images/select_org1.png" class="align-center" src="../_images/select_org1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>This will ask you to login. Guest user have to just select radio button and Admin/Manager/operator
+have to insert username and password.</li>
+</ul>
+<img alt="../_images/login_user.png" class="align-center" src="../_images/login_user.png" style="width: 350pt; height: 200pt;" />
+</div>
+</div>
+<div class="section" id="master-menu">
+<h1>Master menu<a class="headerlink" href="#master-menu" title="Permalink to this headline">¶</a></h1>
+<p>Aakash Business Tool&#8217;s master menu includes list of menu options as shown in figure.</p>
+<img alt="user/images/master_menu.png" class="align-center" src="user/images/master_menu.png" style="width: 350pt; height: 200pt;" />
+<dl class="docutils">
+<dt><strong>Create account</strong></dt>
+<dd><ul class="first last simple">
+<li>Create an account under respective <tt class="docutils literal"><span class="pre">group</span></tt> and <tt class="docutils literal"><span class="pre">subgroup</span></tt> with an opening balance.</li>
+<li>Search/Edit/Delete account.</li>
+</ul>
+</dd>
+<dt><strong>Transaction</strong></dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">Record</span></tt> transaction in ABT.</li>
+<li><tt class="docutils literal"><span class="pre">Search/Edit/Clone/Delete</span></tt> transaction.</li>
+</ul>
+</dd>
+<dt><strong>Reports</strong></dt>
+<dd><ul class="first last simple">
+<li>View different types of reports such as <tt class="docutils literal"><span class="pre">Ledger,</span> <span class="pre">Trial</span> <span class="pre">Balance,</span> <span class="pre">Project</span> <span class="pre">Statement,</span> <span class="pre">Cash</span> <span class="pre">Flow,</span> <span class="pre">Balance</span> <span class="pre">Sheet,</span> <span class="pre">Profit</span> <span class="pre">&amp;</span> <span class="pre">Loss/Income</span> <span class="pre">&amp;</span> <span class="pre">Expenditure</span></tt>.</li>
+</ul>
+</dd>
+<dt><strong>Bank Reconciliation</strong></dt>
+<dd><ul class="first last simple">
+<li>Set clearance date for cleared transaction and view <tt class="docutils literal"><span class="pre">Bank</span> <span class="pre">Reconciliation</span></tt> statement.</li>
+</ul>
+</dd>
+<dt><strong>Preferences</strong></dt>
+<dd><ul class="first last simple">
+<li>Set preferences to <tt class="docutils literal"><span class="pre">Edit/Delete</span> <span class="pre">organisation</span> <span class="pre">details</span></tt> and <tt class="docutils literal"><span class="pre">Add/Edit/Delete</span> <span class="pre">project</span> <span class="pre">name</span></tt>.</li>
+</ul>
+</dd>
+<dt><strong>Rollover</strong></dt>
+<dd><ul class="first last simple">
+<li>Transfer the holdings to the next financial year.</li>
+</ul>
+</dd>
+<dt><strong>Export organisation</strong></dt>
+<dd><ul class="first last simple">
+<li>Export organisation data from one tablet to another.</li>
+</ul>
+</dd>
+<dt><strong>Account settings</strong></dt>
+<dd><ul class="first last simple">
+<li>Set new username and password.</li>
+<li>Create new user role.</li>
+</ul>
+</dd>
+<dt><strong>Help</strong></dt>
+<dd><ul class="first last simple">
+<li>How to use ABT</li>
+</ul>
+</dd>
+</dl>
+<div class="section" id="user-authentication">
+<h2>User authentication<a class="headerlink" href="#user-authentication" title="Permalink to this headline">¶</a></h2>
+<p>According to the user role access to the menus are provided.</p>
+<ol class="arabic simple">
+<li><strong>Admin</strong> have access to all the above options.</li>
+<li>Except <tt class="docutils literal"><span class="pre">rollover</span></tt> <strong>Manager</strong> can access all the options.</li>
+<li><strong>Operator</strong> has access to <tt class="docutils literal"><span class="pre">create</span> <span class="pre">account,</span> <span class="pre">Transaction,</span> <span class="pre">Export</span> <span class="pre">organisation,</span> <span class="pre">Account</span> <span class="pre">Settings,</span> <span class="pre">Help</span></tt>.</li>
+<li>Except <tt class="docutils literal"><span class="pre">rollover</span> <span class="pre">and</span> <span class="pre">account</span> <span class="pre">setting</span></tt> <strong>guest</strong> can access remaining options.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="account-management">
+<h1>Account management<a class="headerlink" href="#account-management" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>Account management covers three major parts ie. create,search, edit and delete account .</li>
+<li>Go to <tt class="docutils literal"><span class="pre">Master</span> <span class="pre">menu</span></tt> &gt; <tt class="docutils literal"><span class="pre">Create</span> <span class="pre">account</span></tt>.</li>
+</ul>
+<div class="section" id="save-account-code-preference">
+<h2>Save account code preference<a class="headerlink" href="#save-account-code-preference" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Before you start creating a new account, you have to specify the account code type ie.
+manual or automated. When first time you enter into this page, The alert-box will appear on the screen
+(See below figure).</li>
+</ul>
+<img alt="../_images/account_code_pref.png" class="align-center" src="../_images/account_code_pref.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Check the check-box if manual account code has to be provided or leave it as it is for automatic
+account code generation. Click on <tt class="docutils literal"><span class="pre">Save</span></tt> button to save this preference.
+Remember, This is only one time activity. Later on this alert-box will
+not appear on the screen instead it will follow the saved preference(manual or automatic)
+for account code.</li>
+</ul>
+</div>
+<div class="section" id="how-to-create-a-new-account">
+<h2>How to create a new account?<a class="headerlink" href="#how-to-create-a-new-account" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Create an account under respective <tt class="docutils literal"><span class="pre">group</span></tt> and <tt class="docutils literal"><span class="pre">subgroup</span></tt> with an
+opening balance. This will automatically update the <tt class="docutils literal"><span class="pre">total</span> <span class="pre">debit</span> <span class="pre">opening</span> <span class="pre">balance,</span>
+<span class="pre">total</span> <span class="pre">credit</span> <span class="pre">opening</span> <span class="pre">balance</span></tt> and <tt class="docutils literal"><span class="pre">difference</span></tt> between them.</li>
+</ul>
+<img alt="../_images/create_account1.png" class="align-center" src="../_images/create_account1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Press <tt class="docutils literal"><span class="pre">Save</span></tt> to save an account.</li>
+<li><tt class="docutils literal"><span class="pre">Finish</span></tt> button will take to the Master menu page.</li>
+</ul>
+</div>
+<div class="section" id="search-edit-account">
+<h2>Search/Edit account<a class="headerlink" href="#search-edit-account" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Select <tt class="docutils literal"><span class="pre">Edit</span> <span class="pre">account</span></tt> tab.</li>
+<li>It displays <tt class="docutils literal"><span class="pre">list</span></tt> of all account names.</li>
+</ul>
+<img alt="../_images/search_account1.png" class="align-center" src="../_images/search_account1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>If <tt class="docutils literal"><span class="pre">manual</span> <span class="pre">account</span> <span class="pre">code</span></tt> was checked in Preferences, there will be <tt class="docutils literal"><span class="pre">two</span></tt> options ie. Search by account name and code. Otherwise,search by account name.</li>
+<li>User can Edit/Delete selected account name from the list only if that account has no transactions.</li>
+<li><strong>Edit account</strong> will display complete information about respective account as shown in figure. Only account name and opening balance fields are editable. Press <tt class="docutils literal"><span class="pre">Save</span></tt> to save the changes.</li>
+</ul>
+<img alt="../_images/edit_account1.png" class="align-center" src="../_images/edit_account1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li><strong>Note</strong>: Opening balance field is not editable, if account comes under group <tt class="docutils literal"><span class="pre">Direct</span> <span class="pre">Income</span></tt>, <tt class="docutils literal"><span class="pre">Direct</span> <span class="pre">Expense</span></tt>, <tt class="docutils literal"><span class="pre">Indirect</span> <span class="pre">Income</span></tt> and <tt class="docutils literal"><span class="pre">Indirect</span> <span class="pre">Expense</span></tt> due to its <tt class="docutils literal"><span class="pre">zero</span></tt> opening balance.</li>
+<li>Press <strong>Delete account</strong> to delete the account. Account having opening balance or under transaction cannot be deleted.</li>
+</ul>
+<div class="section" id="transaction-management">
+<h3>Transaction management<a class="headerlink" href="#transaction-management" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>This chapter provides guidence to <tt class="docutils literal"><span class="pre">add/search/edit/clone/delete</span></tt> transaction.</li>
+<li>Go to <tt class="docutils literal"><span class="pre">Master</span> <span class="pre">menu</span></tt> &gt; <tt class="docutils literal"><span class="pre">Create</span> <span class="pre">Voucher</span></tt>.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="record-transaction">
+<h2>Record Transaction<a class="headerlink" href="#record-transaction" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>See <tt class="docutils literal"><span class="pre">Create</span> <span class="pre">Voucher</span></tt> tab as shown in below fig. for recording transactions.</li>
+</ul>
+<img alt="../_images/create_voucher1.png" class="align-center" src="../_images/create_voucher1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>To record transaction in <tt class="docutils literal"><span class="pre">ABT</span></tt> follow the below steps:</li>
+<li>Select the mode of transaction from the list of voucher type.</li>
+<li><tt class="docutils literal"><span class="pre">Mode</span></tt> of transaction can be Contra, Journal, Payment, Receipt, Debit Note, Credit Note,Sales,
+Sales Return, Purchase, Purchase Return.</li>
+</ul>
+<img alt="../_images/voucher_type1.png" class="align-center" src="../_images/voucher_type1.png" style="width: 350pt; height: 200pt;" />
+<p>There should be atleast <tt class="docutils literal"><span class="pre">two</span></tt> accounts for recording transactions. To get started with,</p>
+<ul class="simple">
+<li>Select account <tt class="docutils literal"><span class="pre">Type(Dr/Cr)</span></tt>, <tt class="docutils literal"><span class="pre">Account</span> <span class="pre">name</span></tt> from the dropdown and enter the <tt class="docutils literal"><span class="pre">Amount</span></tt> in rupees
+and repeat the same until amount gets tallied. Use <tt class="docutils literal"><span class="pre">plus</span></tt> button for adding new row.</li>
+<li><strong>Note</strong>: ABT populates drop down of account name by voucher type <tt class="docutils literal"><span class="pre">rule</span></tt>.
+For example, if transaction type is contra, it filters account names that
+comes under contra and fill them in the drop down.</li>
+<li>Closing balance is displayed in between the account name and amount field. It&#8217;s a read only field.</li>
+<li>Press <tt class="docutils literal"><span class="pre">Voucher</span> <span class="pre">date</span></tt> to set the date of transaction.</li>
+<li><strong>Note</strong>: ABT sets financial date as Voucher date, if no transaction is recorded before.
+If any transaction is previously recorded,it sets the voucher date of the previous transaction
+of the respective voucher type. If the date is changed, it updates the bydefault date or previous
+date with the new date.</li>
+<li>Press <tt class="docutils literal"><span class="pre">Project</span> <span class="pre">name</span></tt> to select the project name from list of projects for recording transaction
+under that particular project, otherwise select <tt class="docutils literal"><span class="pre">No</span> <span class="pre">project</span></tt>.</li>
+<li>Enter <tt class="docutils literal"><span class="pre">Voucher</span> <span class="pre">code</span></tt>.</li>
+<li>Enter <tt class="docutils literal"><span class="pre">Voucher</span> <span class="pre">reference</span> <span class="pre">No.</span></tt> or edit the last reference No. .</li>
+<li>Enter <tt class="docutils literal"><span class="pre">Narration</span></tt>.</li>
+<li>Press <tt class="docutils literal"><span class="pre">Save</span></tt> to save transaction and <tt class="docutils literal"><span class="pre">Reset</span></tt> to clear all fields.</li>
+<li>After saving transaction it resets all the fields automatically.</li>
+<li><tt class="docutils literal"><span class="pre">Reset</span></tt> button shown below , present at the bottom will resets all the fields automatically.</li>
+<li>You can change the voucher type if you want to make different voucher entries.</li>
+</ul>
+</div>
+<div class="section" id="search-edit-clone-delete-transaction">
+<h2>Search/Edit/Clone/Delete Transaction<a class="headerlink" href="#search-edit-clone-delete-transaction" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>To <tt class="docutils literal"><span class="pre">Edit/Clone/Delete</span></tt> transaction select <tt class="docutils literal"><span class="pre">Search</span> <span class="pre">voucher</span></tt> tab.</li>
+<li>Its displays <tt class="docutils literal"><span class="pre">all</span></tt> transactions for the complete financial year which comes under <tt class="docutils literal"><span class="pre">selected</span></tt>
+voucher type in create account page as shown in figure.</li>
+</ul>
+<img alt="../_images/search_voucher1.png" class="align-center" src="../_images/search_voucher1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Press <tt class="docutils literal"><span class="pre">Search</span></tt> button (see figure) to search transaction by <tt class="docutils literal"><span class="pre">Voucher</span> <span class="pre">reference</span> <span class="pre">No.,</span> <span class="pre">Date</span> <span class="pre">or</span> <span class="pre">Narration</span></tt>
+and press <tt class="docutils literal"><span class="pre">View</span></tt> button to view the transactions.</li>
+</ul>
+<img alt="../_images/search_voucher_by1.png" class="align-center" src="../_images/search_voucher_by1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Click table <tt class="docutils literal"><span class="pre">row</span></tt> to Edit/Clone/Delete the transactions.</li>
+</ul>
+<img alt="../_images/edit_voucher_alert.png" class="align-center" src="../_images/edit_voucher_alert.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>In <strong>Edit voucher</strong>, except <tt class="docutils literal"><span class="pre">Voucher</span> <span class="pre">No.</span></tt>, all other fields are editable. Press <tt class="docutils literal"><span class="pre">Save</span></tt> to save the changes.</li>
+</ul>
+<img alt="../_images/edit_voucher.png" class="align-center" src="../_images/edit_voucher.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li><strong>Clone voucher</strong> duplicates information on an existing transaction, to create a new one without having to enter all the fields. There is an option to <tt class="docutils literal"><span class="pre">keep</span> <span class="pre">or</span> <span class="pre">change</span></tt> the existing field values. Press <tt class="docutils literal"><span class="pre">Save</span></tt> to save the transaction.</li>
+</ul>
+<img alt="../_images/clone_voucher.png" class="align-center" src="../_images/clone_voucher.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li><strong>Delete voucher</strong>: Press <tt class="docutils literal"><span class="pre">Delete</span></tt> to delete the transaction.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="reports">
+<h1>Reports<a class="headerlink" href="#reports" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>Go to <tt class="docutils literal"><span class="pre">master</span> <span class="pre">menu</span></tt> &gt;&gt; <tt class="docutils literal"><span class="pre">Reports</span></tt>.</li>
+<li>It displays list of all types of reports provided by ABT. If organisation type is NGO, it shows Income and Expenditure in the list otherwise Profit and Loss.</li>
+</ul>
+<img alt="../_images/report_list1.png" class="align-center" src="../_images/report_list1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Title will display respective organisation information such as name, type and financial year.</li>
+<li>Options button is provided to export report in a PDF or CSV format.</li>
+</ul>
+<img alt="../_images/export_pdf.png" class="align-center" src="../_images/export_pdf.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>You can also set security to your file.</li>
+</ul>
+<img alt="../_images/file_security.png" class="align-center" src="../_images/file_security.png" style="width: 350pt; height: 200pt;" />
+<div class="section" id="ledger">
+<ul class="simple">
+<li>You can find the exported PDF/CSV files in ABT_PDF/ABT_CSV folders located at your Home folder .</li>
+</ul>
+<h2>Ledger<a class="headerlink" href="#ledger" title="Permalink to this headline">¶</a></h2>
+<p>Select Ledger option from list, It will pop up a <tt class="docutils literal"><span class="pre">dialog</span> <span class="pre">box</span></tt> (see fig.) which ask’s following information:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">Account</span> <span class="pre">name</span></tt> for which ledger to be shown. Select account name from the <tt class="docutils literal"><span class="pre">dropdown</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">from</span> <span class="pre">date</span></tt> and <tt class="docutils literal"><span class="pre">to</span> <span class="pre">date</span></tt>, by default it is financial year&#8217;s from date and to date. Change date as per the requirement or keep it as it is.</li>
+<li>Check box to view transactions with <tt class="docutils literal"><span class="pre">narrations</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">Project</span> <span class="pre">name</span></tt> to view projectwise ledger. Select project from the dropdown, by default <tt class="docutils literal"><span class="pre">No</span> <span class="pre">Project</span></tt> is selected.</li>
+</ul>
+<img alt="../_images/ledger_before1.png" class="align-center" src="../_images/ledger_before1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Press <tt class="docutils literal"><span class="pre">View</span></tt>.</li>
+<li>It will display ledger for the given period in a tabular format. Opening balance is located at the first row of the table followed by transactions, with Total of transactions, Closing balance and Grand total at bottom of the table.</li>
+</ul>
+<img alt="../_images/ledger1.png" class="align-center" src="../_images/ledger1.png" style="width: 350pt; height: 200pt;" />
+</div>
+<div class="section" id="trial-balance">
+<h2>Trial Balance<a class="headerlink" href="#trial-balance" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Like Ledger, It will pop up a <tt class="docutils literal"><span class="pre">dialog</span> <span class="pre">box</span></tt> (see fig.) which ask’s following information:</li>
+<li><tt class="docutils literal"><span class="pre">to</span> <span class="pre">date</span></tt>, by default it is financial year&#8217;s to date. Change date as per the requirement or keep it as it is.</li>
+<li>Trial Balance type. In ABT, there are 3 types of trial balances such as Net, Gross and Extended. Select it from the dropdown.</li>
+</ul>
+<img alt="../_images/trial_before1.png" class="align-center" src="../_images/trial_before1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Press <tt class="docutils literal"><span class="pre">View</span></tt>.</li>
+<li>It will display Trial Balance for the given period in a tabular format. Difference in Opening Balance is located at the bottom of the screen.</li>
+</ul>
+<img alt="user/images/trial_balance.png" class="align-center" src="user/images/trial_balance.png" style="width: 350pt; height: 200pt;" />
+</div>
+<div class="section" id="project-statement">
+<h2>Project Statement<a class="headerlink" href="#project-statement" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>It will pop up a <tt class="docutils literal"><span class="pre">dialog</span> <span class="pre">box</span></tt> (see fig.) which ask’s following information:</li>
+<li><tt class="docutils literal"><span class="pre">to</span> <span class="pre">date</span></tt>, by default it is financial year&#8217;s to date. Change date as per the requirement or keep it as it is.</li>
+<li><tt class="docutils literal"><span class="pre">Project</span> <span class="pre">name</span></tt> to view projectwise transactions. Select project from the dropdown, by default <tt class="docutils literal"><span class="pre">No</span> <span class="pre">Project</span></tt> is selected.</li>
+</ul>
+<img alt="../_images/proj_before1.png" class="align-center" src="../_images/proj_before1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Press <tt class="docutils literal"><span class="pre">View</span></tt>.</li>
+<li>It will display Project Statement for the given period in a tabular format. Difference in Opening Balance is located at the bottom of the screen.</li>
+</ul>
+<img alt="../_images/proj_statement1.png" class="align-center" src="../_images/proj_statement1.png" style="width: 350pt; height: 200pt;" />
+</div>
+<div class="section" id="cash-flow">
+<h2>Cash Flow<a class="headerlink" href="#cash-flow" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>It will pop up a <tt class="docutils literal"><span class="pre">dialog</span> <span class="pre">box</span></tt> (see fig.) which ask’s following information:</li>
+<li><tt class="docutils literal"><span class="pre">from</span> <span class="pre">date</span></tt> and <tt class="docutils literal"><span class="pre">to</span> <span class="pre">date</span></tt>, by default it is financial year&#8217;s from date and to date. Change date as per the requirement or keep it as it is.</li>
+</ul>
+<img alt="../_images/cashflow_before1.png" class="align-center" src="../_images/cashflow_before1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Press <tt class="docutils literal"><span class="pre">View</span></tt>.</li>
+<li>It will display Cash Flow for the given period in a tabular format. Net Flow is located at the bottom of the screen.</li>
+</ul>
+<img alt="../_images/cashflow1.png" class="align-center" src="../_images/cashflow1.png" style="width: 350pt; height: 200pt;" />
+</div>
+<div class="section" id="balance-sheet">
+<h2>Balance Sheet<a class="headerlink" href="#balance-sheet" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>It will pop up a <tt class="docutils literal"><span class="pre">dialog</span> <span class="pre">box</span></tt> (see fig.) which ask’s following information:</li>
+<li><tt class="docutils literal"><span class="pre">to</span> <span class="pre">date</span></tt>, by default it is financial year&#8217;s to date. Change date as per the requirement or keep it as it is.</li>
+<li>Balance Sheet type. In ABT, there are 2 types of balance Sheets such as Conventional(horizontal) and Sources &amp; Application of Funds(vertical). Select it from the dropdown.</li>
+</ul>
+<img alt="../_images/balancesheet_before1.png" class="align-center" src="../_images/balancesheet_before1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Press <tt class="docutils literal"><span class="pre">View</span></tt>.</li>
+<li>It will display Balance Sheet for the given period in a tabular format. Difference in Opening Balance is located at the bottom of the screen.</li>
+</ul>
+<img alt="../_images/balancesheet1.png" class="align-center" src="../_images/balancesheet1.png" style="width: 350pt; height: 200pt;" />
+</div>
+<div class="section" id="income-expenditure-profit-loss">
+<h2>Income &amp; Expenditure/Profit &amp; Loss<a class="headerlink" href="#income-expenditure-profit-loss" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>It will pop up a <tt class="docutils literal"><span class="pre">dialog</span> <span class="pre">box</span></tt> (see fig.) which ask’s following information:</li>
+<li><tt class="docutils literal"><span class="pre">to</span> <span class="pre">date</span></tt>, by default it is financial year&#8217;s to date. Change date as per the requirement or keep it as it is.</li>
+</ul>
+<img alt="../_images/profitloss_before1.png" class="align-center" src="../_images/profitloss_before1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Press <tt class="docutils literal"><span class="pre">View</span></tt>.</li>
+<li>It will display Income &amp; Expenditure/Profit &amp; Loss for the given period in a tabular format.</li>
+</ul>
+<img alt="../_images/profitloss1.png" class="align-center" src="../_images/profitloss1.png" style="width: 350pt; height: 200pt;" />
+</div>
+</div>
+<div class="section" id="bank-reconciliation">
+<h1>Bank reconciliation<a class="headerlink" href="#bank-reconciliation" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>Go to <tt class="docutils literal"><span class="pre">Master</span> <span class="pre">menu</span></tt> &gt; <tt class="docutils literal"><span class="pre">Bank</span> <span class="pre">Reconciliation</span></tt>.</li>
+<li>It will pop up a <tt class="docutils literal"><span class="pre">dialog</span> <span class="pre">box</span></tt> (see fig.) which ask’s following information.</li>
+<li><tt class="docutils literal"><span class="pre">Account</span> <span class="pre">name</span></tt> for which Bank Reconciliation is to be done. Select account name from the <tt class="docutils literal"><span class="pre">dropdown</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">from</span> <span class="pre">date</span></tt> and <tt class="docutils literal"><span class="pre">to</span> <span class="pre">date</span></tt>, by default it is financial year&#8217;s from date and to date. Change date as per the requirement.</li>
+<li>Check box to view cleared+uncleared transactions.</li>
+<li>Check box to view transactions with <tt class="docutils literal"><span class="pre">narrations</span></tt>.</li>
+</ul>
+<img alt="../_images/bank_reco_before1.png" class="align-center" src="../_images/bank_reco_before1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Press <tt class="docutils literal"><span class="pre">View</span></tt>.</li>
+<li>It will display all transactions(cleared + uncleared) for that period and all uncleared transactions from starting day of financial year to the last day of the entered period for that account in a tabular format.</li>
+</ul>
+<img alt="../_images/bank_reconciliation1.png" class="align-center" src="../_images/bank_reconciliation1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>More about this table:</li>
+<li><tt class="docutils literal"><span class="pre">Total</span> <span class="pre">Debit</span></tt> &amp; <tt class="docutils literal"><span class="pre">Total</span> <span class="pre">Credit</span></tt> at the end of the table.</li>
+<li>Bank Reconciliation Statement is located at the bottom of the table.</li>
+</ul>
+<img alt="../_images/bank_statement.png" class="align-center" src="../_images/bank_statement.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Options button is provided to export report in a PDF or CSV format.</li>
+</ul>
+</div>
+<div class="section" id="setting-up-preferences">
+<h1>Setting up preferences<a class="headerlink" href="#setting-up-preferences" title="Permalink to this headline">¶</a></h1>
+<p>Select <tt class="docutils literal"><span class="pre">Preferences</span></tt> option from master menu to edit organisation details or Add/Edit/Delete project.</p>
+<div class="section" id="edit-delete-organisation-details">
+<h2>Edit/Delete organisation details<a class="headerlink" href="#edit-delete-organisation-details" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Displays previously saved organisation information, all the fields are editable.</li>
+</ul>
+<img alt="../_images/edit_org.png" class="align-center" src="../_images/edit_org.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>User can edit these fields if required.</li>
+<li>Press <tt class="docutils literal"><span class="pre">Save</span></tt> to save the changes.</li>
+<li>Press <tt class="docutils literal"><span class="pre">Reset</span></tt> to clear all the fields.</li>
+<li>Press <tt class="docutils literal"><span class="pre">Delete</span></tt> button to delete organisation. You can also delete previous financial year of
+the same organisation.</li>
+</ul>
+<img alt="../_images/delete_org.png" class="align-center" src="../_images/delete_org.png" style="width: 350pt; height: 200pt;" />
+</div>
+<div class="section" id="add-edit-delete-project">
+<h2>Add/Edit/Delete project<a class="headerlink" href="#add-edit-delete-project" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>It displays list of all projects added before.</li>
+</ul>
+<img alt="../_images/project_list1.png" class="align-center" src="../_images/project_list1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">Add</span> <span class="pre">project</span></tt> (see figure) will help to add new project if not exists.</li>
+<li>Select project name from the list, It diplays a popup which is having two options such as <tt class="docutils literal"><span class="pre">edit</span></tt> or <tt class="docutils literal"><span class="pre">delete</span></tt> project name.</li>
+<li><strong>Note</strong>: If project has transactions, it can not be deleted.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="rollover">
+<h1>Rollover<a class="headerlink" href="#rollover" title="Permalink to this headline">¶</a></h1>
+<ul>
+<li><p class="first">Go to <tt class="docutils literal"><span class="pre">Master</span> <span class="pre">menu</span></tt> &gt; <tt class="docutils literal"><span class="pre">Rollover</span></tt>.</p>
+</li>
+<li><p class="first">Click on <tt class="docutils literal"><span class="pre">Rollover</span></tt>, it will prompt accourding to following conditions.</p>
+<blockquote>
+<div><ul class="simple">
+<li>It will check for financial period, if it is not completed financial to date then,
+it prompt for <tt class="docutils literal"><span class="pre">can</span> <span class="pre">not</span> <span class="pre">rollover,</span> <span class="pre">since</span> <span class="pre">financial</span> <span class="pre">year</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">completed!!</span></tt>.</li>
+<li>Else if financial year is completed then it prompt to <tt class="docutils literal"><span class="pre">rollover</span> <span class="pre">has</span> <span class="pre">been</span> <span class="pre">done</span></tt>.</li>
+<li>Rollover will be done only once in a financial period so , if you click on it again,
+it prompt <tt class="docutils literal"><span class="pre">rollover</span> <span class="pre">has</span> <span class="pre">done</span> <span class="pre">already!!</span></tt></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="export-import-organisation">
+<h1>Export/Import organisation<a class="headerlink" href="#export-import-organisation" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><ul>
+<li><p class="first">Export organisation :</p>
+<blockquote>
+<div><ul class="simple">
+<li>Go to <tt class="docutils literal"><span class="pre">Master</span> <span class="pre">menu</span></tt> &gt; <tt class="docutils literal"><span class="pre">Export</span> <span class="pre">organisation</span></tt>.</li>
+<li>Click on it, It will pop up a <tt class="docutils literal"><span class="pre">dialog</span> <span class="pre">box</span></tt> (see fig.) which ask’s &#8220;Do you want to export organisation&#8221;.</li>
+<li>If you will click on <tt class="docutils literal"><span class="pre">Yes</span></tt> then, it will again prompt &#8220;organisation has been exported to /mnt/sdcard/export/&#8221;.</li>
+<li>See, there is a location in tablet called <tt class="docutils literal"><span class="pre">/mnt/sdcard/export</span></tt> , you can able ton find exported organisation
+sql formated file.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Import organisation :</p>
+<blockquote>
+<div><ul class="simple">
+<li>To import same organisation in another tablet just transfer <tt class="docutils literal"><span class="pre">export</span></tt> folder, provided <tt class="docutils literal"><span class="pre">ABT</span></tt> is installed.</li>
+<li>Import option is available at first page of <tt class="docutils literal"><span class="pre">ABT</span></tt> in <tt class="docutils literal"><span class="pre">Options</span> <span class="pre">menu</span></tt>.</li>
+</ul>
+<img alt="user/images/import_option.png" class="align-center" src="user/images/import_option.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Just click on <tt class="docutils literal"><span class="pre">Import</span></tt>, it will show all available exported organisation and financial years
+to import it on current tablet.</li>
+<li>Now, select organisation name and it&#8217;s financial year which you would like to import and click on <tt class="docutils literal"><span class="pre">Import</span></tt> button.</li>
+</ul>
+<img alt="user/images/import.png" class="align-center" src="user/images/import.png" style="width: 350pt; height: 200pt;" />
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="user_guide.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">About Aakash Business Tool(ABT)</a></li>
+<li><a class="reference internal" href="#maintaining-organisations">Maintaining organisations</a><ul>
+<li><a class="reference internal" href="#welcome-page">welcome page</a></li>
+<li><a class="reference internal" href="#setting-up-a-new-organisation">Setting up a new organisation</a></li>
+<li><a class="reference internal" href="#select-existing-organisation">Select existing organisation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#master-menu">Master menu</a><ul>
+<li><a class="reference internal" href="#user-authentication">User authentication</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#account-management">Account management</a><ul>
+<li><a class="reference internal" href="#save-account-code-preference">Save account code preference</a></li>
+<li><a class="reference internal" href="#how-to-create-a-new-account">How to create a new account?</a></li>
+<li><a class="reference internal" href="#search-edit-account">Search/Edit account</a><ul>
+<li><a class="reference internal" href="#transaction-management">Transaction management</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#record-transaction">Record Transaction</a></li>
+<li><a class="reference internal" href="#search-edit-clone-delete-transaction">Search/Edit/Clone/Delete Transaction</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#reports">Reports</a><ul>
+<li><a class="reference internal" href="#ledger">Ledger</a></li>
+<li><a class="reference internal" href="#trial-balance">Trial Balance</a></li>
+<li><a class="reference internal" href="#project-statement">Project Statement</a></li>
+<li><a class="reference internal" href="#cash-flow">Cash Flow</a></li>
+<li><a class="reference internal" href="#balance-sheet">Balance Sheet</a></li>
+<li><a class="reference internal" href="#income-expenditure-profit-loss">Income &amp; Expenditure/Profit &amp; Loss</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bank-reconciliation">Bank reconciliation</a></li>
+<li><a class="reference internal" href="#setting-up-preferences">Setting up preferences</a><ul>
+<li><a class="reference internal" href="#edit-delete-organisation-details">Edit/Delete organisation details</a></li>
+<li><a class="reference internal" href="#add-edit-delete-project">Add/Edit/Delete project</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rollover">Rollover</a></li>
+<li><a class="reference internal" href="#export-import-organisation">Export/Import organisation</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/user/pdf_file.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="user_guide.html">Aakash Business Tool 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, androportal.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

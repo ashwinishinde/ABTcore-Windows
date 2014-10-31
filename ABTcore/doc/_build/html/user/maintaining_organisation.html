@@ -1,0 +1,209 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2.1. Maintaining organisations &mdash; Aakash Business Tool 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Aakash Business Tool 1.0 documentation" href="../index.html" />
+    <link rel="up" title="2. How to Operate" href="how_to_operate.html" />
+    <link rel="next" title="2.2. Master menu" href="Master_menu.html" />
+    <link rel="prev" title="2. How to Operate" href="how_to_operate.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Master_menu.html" title="2.2. Master menu"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="how_to_operate.html" title="2. How to Operate"
+             accesskey="P">previous</a> |</li>
+        <li><a href="user_guide.html">Aakash Business Tool 1.0 documentation</a> &raquo;</li>
+          <li><a href="how_to_operate.html" accesskey="U">2. How to Operate</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="section" id="maintaining-organisations">
+<h1>2.1. Maintaining organisations<a class="headerlink" href="#maintaining-organisations" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>It includes <tt class="docutils literal"><span class="pre">creation</span></tt> of organisation and <tt class="docutils literal"><span class="pre">saving</span></tt> organisation details.</li>
+</ul>
+<div class="section" id="welcome-page">
+<h2>2.1.1. Welcome page<a class="headerlink" href="#welcome-page" title="Permalink to this headline">¶</a></h2>
+<img alt="../_images/welcome_page.png" class="align-center" id="welcome" src="../_images/welcome_page.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>As the application is launched, it automatically checks whether the application is running on <tt class="docutils literal"><span class="pre">emulator</span></tt> or <tt class="docutils literal"><span class="pre">tablet</span></tt> and do all required things.</li>
+<li>To switch to <tt class="docutils literal"><span class="pre">Remote</span> <span class="pre">server</span></tt>, user can drag the screen from left to right to find <tt class="docutils literal"><span class="pre">Change</span> <span class="pre">server</span> <span class="pre">location</span></tt> option.</li>
+</ul>
+<img alt="../_images/drawer_options.png" class="align-center" id="abt-main-page" src="../_images/drawer_options.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>On selecting <tt class="docutils literal"><span class="pre">Change</span> <span class="pre">server</span> <span class="pre">location</span></tt> , it prompts a dialog to enter IP address manually.
+It requires a live internet connection, it can be within an organization
+or an institute. User can access a centralized remote server running within
+the institute. The advantage is, each user will have his/her own
+account on the server. The central server runs Sqlite3 as a database engine.</li>
+</ul>
+<img alt="../_images/remote_location.png" class="align-center" id="id1" src="../_images/remote_location.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Click on <tt class="docutils literal"><span class="pre">Ok</span></tt> button.</li>
+<li>There are two options at the top of the screen: <strong>Create new organisation</strong> and
+<strong>Select existing organisation</strong>.</li>
+</ul>
+</div>
+<div class="section" id="setting-up-a-new-organisation">
+<h2>2.1.2. Setting up a new organisation<a class="headerlink" href="#setting-up-a-new-organisation" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>To get started, user need to create aleast one organisation.</li>
+<li>Press <tt class="docutils literal"><span class="pre">Create</span> <span class="pre">New</span> <span class="pre">Organisation</span></tt>.</li>
+</ul>
+<img alt="../_images/create_org1.png" class="align-center" id="id2" src="../_images/create_org1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Type the <tt class="docutils literal"><span class="pre">name</span></tt> of organisation.</li>
+<li>Select the organisation <tt class="docutils literal"><span class="pre">type</span></tt> (NGO or Profit Making).</li>
+<li>Specify the Financial Year <tt class="docutils literal"><span class="pre">From</span></tt> and Financial Year <tt class="docutils literal"><span class="pre">To</span></tt>.</li>
+<li><strong>Note</strong>: ABT provides 1st April to 31st March as the predefined financial year, But user can change the To date <tt class="docutils literal"><span class="pre">manually</span></tt> according to organization&#8217;s rules or requirement. Once the <tt class="docutils literal"><span class="pre">From</span></tt> date is set, <tt class="docutils literal"><span class="pre">To</span></tt> date gets automatically updated by <tt class="docutils literal"><span class="pre">12</span></tt> months and minus <tt class="docutils literal"><span class="pre">1</span></tt> day.</li>
+<li>Press <tt class="docutils literal"><span class="pre">next</span></tt> to sign up as a user. This will open a dialog where user can select role such as admin or guest.</li>
+</ul>
+<img alt="../_images/login.png" class="align-center" src="../_images/login.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Guest user has a default username and password ie. <tt class="docutils literal"><span class="pre">guest</span></tt>.</li>
+<li>If user will select <tt class="docutils literal"><span class="pre">admin</span></tt>, a new pop-up box will appear on the screen to sign up as an admin.
+Save details and press <tt class="docutils literal"><span class="pre">Login</span></tt> to continue.</li>
+</ul>
+<img alt="../_images/sign_up.png" class="align-center" id="id3" src="../_images/sign_up.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Fill the organisation details if required else, press <tt class="docutils literal"><span class="pre">Skip</span></tt>.</li>
+</ul>
+<img alt="../_images/org_details1.png" class="align-center" id="id4" src="../_images/org_details1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>Press the <tt class="docutils literal"><span class="pre">Save</span></tt> button to save the organisation details and it will take to ABT&#8217;s master menu.</li>
+<li><strong>Note</strong>: In both cases,whether the user clicks <tt class="docutils literal"><span class="pre">skip</span></tt> or <tt class="docutils literal"><span class="pre">save</span></tt> organisation will be created .</li>
+</ul>
+</div>
+<div class="section" id="select-existing-organisation">
+<h2>2.1.3. Select existing organisation<a class="headerlink" href="#select-existing-organisation" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Press <tt class="docutils literal"><span class="pre">Select</span> <span class="pre">New</span> <span class="pre">Organisation</span></tt>.</li>
+<li>It will display the list of Organisations.</li>
+<li>Select the required <tt class="docutils literal"><span class="pre">organisation</span></tt> and respective <tt class="docutils literal"><span class="pre">financial</span> <span class="pre">year</span></tt>.</li>
+<li>Press <tt class="docutils literal"><span class="pre">Login</span></tt>.</li>
+</ul>
+<img alt="../_images/select_org1.png" class="align-center" src="../_images/select_org1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>This will ask you to login. Guest users just need to select radio button and rest ie. Admin/Manager/operator
+have to authenticate themselves by putting username and password.</li>
+</ul>
+<img alt="../_images/login_user_test.png" class="align-center" src="../_images/login_user_test.png" style="width: 350pt; height: 200pt;" />
+<img alt="../_images/login_user.png" class="align-center" src="../_images/login_user.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>If the admin forgets his password, he can reset his password by answering the security questions using <tt class="docutils literal"><span class="pre">Forgot</span> <span class="pre">password</span></tt> link .</li>
+</ul>
+<img alt="../_images/forget_password.png" class="align-center" src="../_images/forget_password.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>This step will be followed by reset password activity. Admin has to reset password to
+perform any further activities.</li>
+</ul>
+<img alt="../_images/reset_password.png" class="align-center" src="../_images/reset_password.png" style="width: 350pt; height: 200pt;" />
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="user_guide.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2.1. Maintaining organisations</a><ul>
+<li><a class="reference internal" href="#welcome-page">2.1.1. Welcome page</a></li>
+<li><a class="reference internal" href="#setting-up-a-new-organisation">2.1.2. Setting up a new organisation</a></li>
+<li><a class="reference internal" href="#select-existing-organisation">2.1.3. Select existing organisation</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="how_to_operate.html"
+                        title="previous chapter">2. How to Operate</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Master_menu.html"
+                        title="next chapter">2.2. Master menu</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/user/maintaining_organisation.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Master_menu.html" title="2.2. Master menu"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="how_to_operate.html" title="2. How to Operate"
+             >previous</a> |</li>
+        <li><a href="user_guide.html">Aakash Business Tool 1.0 documentation</a> &raquo;</li>
+          <li><a href="how_to_operate.html" >2. How to Operate</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, androportal.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

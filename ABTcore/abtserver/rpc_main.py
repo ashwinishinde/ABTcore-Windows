@@ -1,0 +1,931 @@
+#!/usr/bin/python
+from twisted.web import xmlrpc, server
+from twisted.internet import reactor
+from sqlalchemy.orm import sessionmaker,scoped_session
+from xml.etree import ElementTree as et
+from sqlite3 import dbapi2 as sqlite
+from dateutil.relativedelta import relativedelta
+from datetime import datetime, time
+from time import strftime
+import datetime
+import os,sys
+import getopt
+import dbconnect
+import rpc_organisation
+import rpc_groups
+import rpc_account
+import rpc_transaction
+import rpc_data
+import rpc_reports
+import rpc_user
+import rpc_getaccountsbyrule
+from sqlalchemy.orm import join
+import shutil
+from modules import blankspace
+from sqlite3 import dbapi2 as sqlite
+import sqlite3
+import subprocess
+
+
+class abt(xmlrpc.XMLRPC): 
+	"""
+	+ This class is the inherit class of XMLRPC base class
+	+ This is the main file which implement the server and publish the object to given port 
+	  and execute the xmlrpc functions.
+	+ We have used twisted module to implement server and executing xmlrpc calls
+	+ also to publish the object and make it to listen on the given port through reactor 
+	  and start the service by running the reactor.
+	+ It also create database and deploy organisation. 
+	+ note that all the functions to be accessed by the client must have the xmlrpc_ prefix.
+	+ the client however will not use the prefix to call the functions.
+	"""
+	def __init__(self):
+		xmlrpc.XMLRPC.__init__(self)
+
+	def xmlrpc_getOrganisationNames(self): 
+		'''
+		* Purpose:
+			- function is used to return the list of
+		          organsation names found in abt.xml located at /ABT/abt/
+		        - we have imported ``ElementTree`` for parsing xml file.
+		
+		* Output: 
+		        - returns a list of organisation names already present in the file
+		'''
+		# calling the function getOrgList for getting list of organisation nodes.
+		#print "org name"
+		orgs = dbconnect.getOrgList() 
+		# initialising an empty list for organisation names
+		orgnames = [] 
+		for org in orgs:
+			# find orgname tag in abt.xml file
+			orgname=org.find("orgname")
+			# append the distinct orgname 
+			if orgname.text not in orgnames:
+				orgnames.append(orgname.text)
+			orgnames.sort()
+		#print "list"
+		return orgnames
+	
+	def xmlrpc_deleteOrganisation(self,queryParams): 
+		"""
+		* Purpose: 
+			- This function is used delete organisation from existing 
+			  organsations found in abt.xml located at /ABT/abt/ 
+			- also delete database details of respective organisation
+			  from /ABT/abt/db/
+		  
+		* Output: 
+			 - Boolean True
+		"""
+		# parsing abt.xml file
+		tree = et.parse("/ABT/abt/abt.xml") 
+		root = tree.getroot() # getting root node.
+		orgs = root.getchildren() # get list children node (orgnisation)
+		
+		for organisation in orgs:
+		
+			orgname = organisation.find("orgname").text
+			financialyear_from = organisation.find("financial_year_from").text
+			financialyear_to = organisation.find("financial_year_to").text
+			dbname = organisation.find("dbname").text
+			databasename = dbname
+			# Check respective organisation name 
+			deleteflag = False
+			if (orgname == queryParams[0] 
+				and financialyear_from == queryParams[1] 
+				and financialyear_to == queryParams[2]):
+				
+				root.remove(organisation)
+				tree.write("/ABT/abt/abt.xml")
+				os.unlink("/ABT/abt/db/"+databasename)
+				
+		
+		return True	
+
+	def xmlrpc_getFinancialYear(self,arg_orgName):
+		"""
+		* purpose: 
+			- This function will return a list of financial years for the 
+			  given organisation. 
+			- It call getListOfFinancialYear takes one parameter organisationame
+			  and search for existing financialyear for given organisation.
+		* Input: 
+		 	- [organisation name]
+		* Output: 
+		 	- returns financialyear list for peritcular organisation
+		  	  in the format "dd-mm-yyyy"
+		"""
+		
+		financialyearlist = self.getListOfFinancialYear(arg_orgName)
+		return financialyearlist
+	
+	def getListOfFinancialYear(self,arg_orgName):
+		'''
+		* Purpose:
+			- get the list of organisations from the /ABT/abt/abt.xml file.
+			- call the getOrgList function to get the nodes.
+		* Input: 
+			- [organisation name]
+		
+		'''
+		orgs = dbconnect.getOrgList()
+		
+		#Initialising an empty list to be filled with financial years 
+		financialyearlist = []
+		for org in orgs:
+			orgname = org.find("orgname")
+			if orgname.text == arg_orgName:
+				financialyear_from = org.find("financial_year_from")
+				financialyear_to = org.find("financial_year_to")
+				from_and_to = [financialyear_from.text, financialyear_to.text]
+				financialyearlist.append(from_and_to)
+			financialyearlist.sort(reverse=True)
+		
+		return financialyearlist
+	
+	def restore_db(self,conn, db_file, filename):
+		''' 
+			Using DDL and DML SQL script creates a new database
+		'''
+		#print "db_file"+db_file
+		#print "filename"+filename
+		with open(filename, 'r') as f:
+				sql = f.read()
+				conn.executescript(sql)
+				conn.commit()
+
+                        
+        def dump_to_file(self,conn, filename):
+                '''  Creates DDL and DML SQL script file
+                '''
+                with open(filename, 'w') as f:
+                        for line in conn.iterdump():
+                                #print "what is inseide"
+                                #print line
+                                        
+                                f.write('%s\n' % line)
+		
+	def xmlrpc_getConnection(self,queryParams):
+		"""
+		* Purpose: 
+			- This function is used to return the client_id for sqlite 
+			  engine found in ``dbconnect.py``
+		* Input: 
+		 	- [organisation name,finanialyear_from,financialyear_to]
+		* Output: 
+			- returns the client_id integer
+		"""
+		self.client_id=dbconnect.getConnection(queryParams)
+		return self.client_id
+
+	
+	def xmlrpc_closeConnection(self,client_id):
+		"""
+		* Purpose: 
+			- This function is used close the connetion with sqlite 
+			  for client_id
+			  
+		* Input: 
+		 	- [client_id]
+			
+		* Output: 
+		 	- returns boolean True if conncetion closed
+		
+		"""
+		dbconnect.engines[client_id].dispose()
+		del dbconnect.engines[client_id]
+		return True
+		
+		
+	def xmlrpc_Deploy(self,queryParams):
+		"""
+		* Purpose:
+			- The function will generate the database name 
+			  based on the organisation name and time stap.
+			- provided the name of the database is a combination of, 
+			  first character of organisation name,time stap as 
+			  "dd-mm-yyyy-hh-MM-ss-ms" 
+			- An entry will be made in the xml file 
+			  for the currosponding organisation.
+			- This function deploys a database instance for
+			  an organisation for a given financial year.
+			- It will call to getConnection and establish the connection 
+			  for created database
+			- also create the metadata(tables) given in ``dbconnect`` for that organisation
+			  using sqlAlchemy.
+			- create the ``Views`` for the particular organisation.
+			- It add manually ``groupnames`` ad ``subgroups`` to it's corresponding class
+			  tables ``Groups`` and ``subGroups``
+		   	
+		 * Input: 
+		 	- [organisation name,From date,todate,organisation_type]
+		
+		 * Output: 
+		 	- returns boolean True and client_id
+			
+		"""
+		queryParams = blankspace.remove_whitespaces(queryParams)
+		
+		# assigning client queryparams values to variables
+		name_of_org = queryParams[0] # name of organisation
+		db_from_date = queryParams[1]# from date
+		db_to_date = queryParams[2] # to date
+		organisationType = queryParams[3] # organisation type
+		
+		#creating database name for organisation		
+		org_db_name = name_of_org[0:1]
+		time = datetime.datetime.now()
+		str_time = str(time.microsecond)	
+		new_microsecond = str_time[0:2]		
+		result_dbname = org_db_name + str(time.year) + str(time.month) + str(time.day) + str(time.hour)\
+		 		+ str(time.minute) + str(time.second) + new_microsecond
+		
+		del queryParams[3] #delete orgtype
+		queryParams.append(result_dbname) #dbname
+		queryParams.append("0") #rollover flag
+		
+		self.xmlrpc_writeToXmlFile(queryParams,"/ABT/abt/abt.xml");		
+		
+		# getting client_id for the given orgnisation and from and to date
+		self.client_id = dbconnect.getConnection([name_of_org,db_from_date,db_to_date])
+		
+		try:
+			metadata = dbconnect.Base.metadata
+			metadata.create_all(dbconnect.engines[self.client_id])
+		except:
+			print "cannot create metadata"
+			
+		Session = scoped_session(sessionmaker(bind=dbconnect.engines[self.client_id]))
+			
+		dbconnect.engines[self.client_id].execute(\
+			"create view view_account as \
+			select groups.groupname, account.accountcode, account.accountname, account.subgroupcode\
+			from groups, account where groups.groupcode = account.groupcode\
+			order by groupname;")
+			
+		dbconnect.engines[self.client_id].execute(\
+			"create view view_voucherbook as \
+			select voucher_master.vouchercode,voucher_master.flag,voucher_master.reference,\
+			voucher_master.voucherdate,voucher_master.reffdate,voucher_master.vouchertype,account.accountname\
+			as account_name,voucher_details.typeflag,voucher_details.amount,\
+			voucher_master.narration,voucher_master.projectcode,voucher_master.cheque_no\
+			from voucher_master,voucher_details,account as account \
+			where voucher_master.vouchercode = voucher_details.vouchercode \
+			and voucher_details.accountcode = account.accountcode;")
+		dbconnect.engines[self.client_id].execute(\
+			"create view view_group_subgroup as \
+			select groups.groupcode, groups.groupname,subgroups.subgroupcode,subgroups.subgroupname\
+			from groups, subgroups where groups.groupcode = subgroups.groupcode \
+			order by groupname;")
+		dbconnect.engines[self.client_id].execute(\
+			"create view group_subgroup_account as select groups.groupname,\
+			subgroups.subgroupname,account.accountcode,account.accountname,account.openingbalance \
+			from groups join account on (groups.groupcode = account.groupcode)\
+			left outer join subgroups\
+			on (account.subgroupcode = subgroups.subgroupcode) order by groupname;")
+		connection = dbconnect.engines[self.client_id].raw_connection()
+		cur = connection.cursor()
+		
+		if (organisationType == "Profit Making"):
+
+			Session.add_all([
+				dbconnect.Groups('Capital',''),
+				dbconnect.Groups('Current Asset',''),
+				dbconnect.Groups('Current Liability',''),
+				dbconnect.Groups('Direct Income','Income refers to consumption\
+						opportunity gained by an entity within a specified time frame.'),
+				dbconnect.Groups('Direct Expense','This are the expenses to be incurred for\
+						operating the buisness.'),
+				dbconnect.Groups('Fixed Assets',''),
+				dbconnect.Groups('Indirect Income','Income refers to consumption opportunity\
+						gained by an entity within a specified time frame.'),
+				dbconnect.Groups('Indirect Expense','This are the expenses to be incurred\
+						for operating the buisness.'),\
+				dbconnect.Groups('Investment',''),
+				dbconnect.Groups('Loans(Asset)',''),
+				dbconnect.Groups('Loans(Liability)',''),
+				dbconnect.Groups('Reserves',''),
+				dbconnect.Groups('Miscellaneous Expenses(Asset)','')
+			])
+			Session.commit()
+		
+		else:
+			Session.add_all([\
+				dbconnect.Groups('Corpus',''),
+				dbconnect.Groups('Current Asset',''),
+				dbconnect.Groups('Current Liability',''),
+				dbconnect.Groups('Direct Income','Income refers to consumption\
+						opportunity gained by an entity within a specified time frame.'),
+				dbconnect.Groups('Direct Expense','This are the\
+						expenses to be incurred for operating the buisness.'),
+				dbconnect.Groups('Fixed Assets',''),
+				dbconnect.Groups('Indirect Income','Income refers to consumption\
+						opportunity gained by an entity within a specified time frame.'),
+				dbconnect.Groups('Indirect Expense','This are the\
+						expenses to be incurred for operating the buisness.'),
+				dbconnect.Groups('Investment',''),
+				dbconnect.Groups('Loans(Asset)',''),
+				dbconnect.Groups('Loans(Liability)',''),
+				dbconnect.Groups('Reserves',''),
+				dbconnect.Groups('Miscellaneous Expenses(Asset)','')
+			])
+			Session.commit()
+		
+		Session.add_all([\
+			dbconnect.subGroups('2','Bank'),\
+			dbconnect.subGroups('2','Cash'),\
+			dbconnect.subGroups('2','Inventory'),\
+			dbconnect.subGroups('2','Loans & Advance'),\
+			dbconnect.subGroups('2','Sundry Debtors'),\
+			dbconnect.subGroups('3','Provisions'),
+			dbconnect.subGroups('3','Sundry Creditors for Expense'),\
+			dbconnect.subGroups('3','Sundry Creditors for Purchase'),\
+			dbconnect.subGroups('6','Building'),\
+			dbconnect.subGroups('6','Furniture'),\
+			dbconnect.subGroups('6','Land'),\
+			dbconnect.subGroups('6','Plant & Machinery'),\
+			dbconnect.subGroups('9','Investment in Shares & Debentures'),\
+			dbconnect.subGroups('9','Investment in Bank Deposits'),\
+			dbconnect.subGroups('11','Secured'),\
+			dbconnect.subGroups('11','Unsecured')\
+		])
+		
+		Session.commit()
+
+		Session.add_all([\
+			dbconnect.Flags(None,'automatic',0),
+			dbconnect.Flags(None,'manually',0)
+		])
+		Session.commit()
+
+		Session.close()
+		connection.close()
+		return True,self.client_id
+		
+		
+	def xmlrpc_exportOrganisation(self,queryParams,client_id):
+		"""
+		* Purpose:
+			- backup all the tables and values of oraganisation database 
+			  in /ABT/abt/export/*dbname and add organisation tags in /ABT/abt/export/bckp.xml file
+			
+		* Input: 
+		 	- [organisationName,financialFrom,financialTo],client_id
+		 	
+		* Output:
+			- export database and add tag in bckp.xml
+			- return encrypted dbname
+		"""
+		##print "queyParams"
+		##print queryParams
+		#find the database name for selected organisation
+		financialFrom = queryParams[1]
+		financialTo = queryParams[2]
+		orgs = dbconnect.getOrgList()
+		for org in orgs:
+			orgname = org.find("orgname")
+			financialyear_from = org.find("financial_year_from")#DD-MM-YYYY
+			financialyear_to = org.find("financial_year_to")
+			if (orgname.text == queryParams[0]
+					and financialyear_from.text == financialFrom 
+					and financialyear_to.text == financialTo):
+				dbname = org.find("dbname")
+				rollover_flag = org.find("rolloverflag")
+				database = dbname.text
+		##print rollover_flag.text
+		
+		queryParams.append(database)
+		queryParams.append(rollover_flag.text)
+		
+		##print "the current database name is " + database
+		try:
+                        #encrypt the database name
+                        encrypted_db = blankspace.remove_whitespaces([database.encode('base64').rstrip()])
+                        #dump the create and insert queries of sqlite database
+                        connection = dbconnect.engines[client_id].raw_connection()
+                        Session = dbconnect.session(bind=connection)
+
+                        print "exoirt db"
+			if os.path.exists("/ABT/abt/export") == False:
+				os.mkdir("/ABT/abt/export")
+			
+                        os.chdir("/ABT/abt/export")
+                        self.dump_to_file(connection, filename = encrypted_db[0]+".sql")
+                        #os.system("sqlite3 /ABT/abt/db/"+database+" .dump > /ABT/abt/export/"+encrypted_db[0])
+			
+                        #create bckp.xml file if not exist and add the organisation related tags
+                        if os.path.exists("/ABT/abt/export/bckp.xml") == False:
+                                ##print "file not found trying to create one."
+                                try:
+					
+                                        abtconf = open("/ABT/abt/export/bckp.xml", "a")
+                                        abtconf.write("<abt>\n")
+                                        abtconf.write("</abt>")
+                                        abtconf.close()
+			    		
+                                        self.xmlrpc_writeToXmlFile(queryParams,"/ABT/abt/export/bckp.xml");
+					
+                                except:
+                                        #print "the software is finding trouble in creating file."
+                                        return False
+                        else:
+                                self.xmlrpc_writeToXmlFile(queryParams,"/ABT/abt/export/bckp.xml");
+                except:
+                        #print "problem in backup database"
+                        return encrypted_db[0]
+		
+	def xmlrpc_writeToXmlFile(self,queryParams,file_path):
+		"""
+		* Purpose:
+			- Add all organisation related tags in provided xml file
+			
+		* Input: 
+		 	- qureyParams:[organisationName,financialFrom,financialTo,database,rollover_flag]
+		 	
+		* Output:
+			- writes the organisation tags in xml file. 
+		"""
+		#opening the xml file by parsing it into a tree.	
+		abtconf=et.parse(file_path)
+		#now since the file is opened we will get the root element.  
+		abtroot = abtconf.getroot()	
+		#we will now extract the list of children (organisations ) into a variable named orgs. 
+		orgs = abtroot.getchildren()
+		#lets set counter to find if the organisation is already present in xml file
+		count = 0
+		for org in orgs:
+			orgname = org.find("orgname")
+			financialyear_from = org.find("financial_year_from")#DD-MM-YYYY
+			financialyear_to = org.find("financial_year_to")
+			rolloverflag = org.find("rolloverflag")
+			if (orgname.text == queryParams[0]
+					and financialyear_from.text == queryParams[1] 
+					and financialyear_to.text == queryParams[2]):
+				#print "organisation exist in bckp.xml"
+				#increase counter if organisation is present in bckp file
+				count = count + 1
+				#check for the rollover flag, if it differs in value update it
+				if(rolloverflag.text != queryParams[4]):
+					#print "now rollover flag is different"
+					#print "flag updated, no need to add org in xml"
+					rolloverflag.text = "1"
+					abtconf.write(file_path)	
+
+		#if organisation is not present in xml file, add its related tags	
+		if(count == 0):
+			#print "writting to xml file"
+			org = et.SubElement(abtroot,"organisation") #creating an organisation tag
+			org_name = et.SubElement(org,"orgname")
+		
+			# assigning client queryparams values to variables
+			name_of_org = queryParams[0] # name of organisation
+			db_from_date = queryParams[1]# from date
+			db_to_date = queryParams[2] # to date
+		
+			#organisationType = queryParams[3] # organisation type
+			org_name.text = name_of_org #assigning orgnisation name value in orgname tag text of bckp.xml
+			financial_year_from = et.SubElement(org,"financial_year_from") #creating a new tag for financial year fromto	
+			financial_year_from.text = db_from_date
+		
+			financial_year_to = et.SubElement(org,"financial_year_to")
+			financial_year_to.text = db_to_date
+
+			dbname = et.SubElement(org,"dbname")
+			dbname.text = queryParams[3] #assigning created database name value in dbname tag text of bckp.xml
+
+			rollover_flag = et.SubElement(org,"rolloverflag")
+			#print queryParams[4]
+			rollover_flag.text = queryParams[4]
+			#print "file_path"+file_path
+			abtconf.write(file_path)
+		
+		return count
+	
+	def xmlrpc_getAllExportedOrganisations(self):
+		"""
+		* Purpose:
+			- get details of all exported organisations from bckp.xml file
+			- open the bckp.xml file by parsing it into a tree. get the root element.  
+			- extract the list of children (organisations ) into a variable
+			- store org name, from date, to date, dbname and rollover flag of each 
+			  organisation in a separate lists
+			
+		* Input: 
+		 	- no input parameter
+		 	
+		* Output:
+			- a grid including list of each exported organisation details 
+			  such as org name, from date, to date, dbname, rollover
+		"""
+		#print "we are in import"
+		#opening the bckp.xml file by parsing it into a tree.	
+		abtconf = et.parse("/ABT/abt/export/bckp.xml")
+		#now since the file is opened we will get the root element.  
+		abtroot = abtconf.getroot()
+		#we will now extract the list of children (organisations ) into a variable named orgs. 
+		orgs = abtroot.getchildren()
+		#lets set counter to find if the organisation is already added in bckp.xml file
+		all_orgsGrid = []
+		orgnames = []
+		financial_year = []
+		dbname = []
+		rollover_flag = []
+		for org in orgs:
+			orgname = org.find("orgname")
+			financialyear_from = org.find("financial_year_from")#DD-MM-YYYY
+			financialyear_to = org.find("financial_year_to")
+			db_name = org.find("dbname")
+			rolloverflag = org.find("rolloverflag")
+			orgnames.append(orgname.text)
+			financial_year.append('%s to %s' %(financialyear_from.text,financialyear_to.text))
+			dbname.append(db_name.text)
+			rollover_flag.append(rolloverflag.text)
+		all_orgsGrid.append(orgnames)
+		all_orgsGrid.append(financial_year)
+		all_orgsGrid.append(dbname)
+		all_orgsGrid.append(rollover_flag)
+		#print all_orgsGrid
+		return all_orgsGrid
+		
+	def xmlrpc_copyPDF(self,queryParams):
+		"""
+		input: PDF filename
+		copy pdf from /mnt/sdcard to user's file system
+		"""
+		
+		os.mkdir("/ABT/abt/ABT_PDF")
+		os.system("adb -e pull /mnt/sdcard/"+queryParams+".pdf C:/ABT/abt/ABT_PDF")
+		return "success"
+
+	def xmlrpc_pushexport(self):
+		if os.path.exists("/ABT/abt/export/"):	
+			print " In push export 'export' folder exist"
+			if os.listdir("/ABT/abt/export/")==[]:
+				print "folder is empty"
+				
+			else:
+				os.system("adb -e push C:/ABT/abt/export /mnt/sdcard/export/")
+		else:
+			print "export folder doesnt exist"
+			os.mkdir("/ABT/abt/export/")
+		return "success"
+
+	def xmlrpc_copyCSV(self,queryParams):
+		"""
+		*    input: PDF filename
+		*    copy pdf from /mnt/sdcard to user's file system
+		"""
+		
+		os.mkdir("/ABT/abt/ABT_CSV")
+		os.system("adb -e pull /mnt/sdcard/"+queryParams+".csv C:/ABT/abt/ABT_CSV")
+		return "success"
+
+	def xmlrpc_copyDocs(self):
+
+		print "We are about to push folder"
+		if os.path.exists("/ABT/abt/doc/"):
+			os.system("adb -e push /ABT/abt/doc /data/local/doc")
+		else:
+			print "No file found"
+		return "success"
+
+
+
+	def xmlrpc_copyexport(self):
+		"""
+			input: PDF filename
+			copy export folder to user's file system
+		"""
+		
+		print "path exist in copy export"
+		os.system("adb -e push /ABT/abt/export /mnt/sdcard/export/")
+
+		return "success"
+		
+	def xmlrpc_Import(self,queryParams):
+		"""
+		* Purpose:
+			- import database from /export directory to /ABT/abt/db 
+			  and write org tags in /ABT/abt/abt.xml file
+			
+		* Input: 
+		 	- qureyParams:[organisationName,financialFrom,financialTo,database,rollover_flag]
+		 	
+		* Output:
+			- import database and write org tags in xml file
+		"""
+		#print "queryParams"
+		#writting to xml file
+		count = self.xmlrpc_writeToXmlFile(queryParams,"/ABT/abt/abt.xml");
+		
+		if(count != 0):
+			#print "deleting the existing database"
+			os.unlink("/ABT/abt/db/"+queryParams[3])
+			#print "import"
+		#encrypt the database name
+		encrypted_db = blankspace.remove_whitespaces([queryParams[3].encode('base64').rstrip()])
+		#adding database with all data in db folder
+		#os.chdir("/ABT/abt/export/")
+		connection = dbconnect.engines[self.client_id].raw_connection()
+		self.restore_db(connection, db_file="C:/ABT/abt/db/"+queryParams[3], filename= "C:/ABT/abt/export/"+encrypted_db[0]+".sql")
+		#os.system("sqlite3 /ABT/abt/db/"+queryParams[3]+"< /ABT/abt/export/"+encrypted_db[0])
+		if os.path.exists("/ABT/abt/export/"):
+
+			os.system("adb -e push C:/ABT/abt/export /mnt/sdcard/export/")
+		else:
+			print"No file found" 
+		return "success"
+		
+	def newFinancialYears(self,queryParams):
+		
+		financialFrom = queryParams[0] # get financial from date 
+		financialTo = queryParams[1] # get financial to date
+		
+		oneDay = datetime.timedelta(days=1) # to get new finincial from date calculate one day difference
+		finalDate = datetime.date(int(financialTo[6:10]),int(financialTo[3:5]),int(financialTo[0:2]))
+		newStartDate = finalDate + oneDay # add one day to financial To-date
+		newFinancialFrom = newStartDate.strftime("%d-%m-%Y") # get new finincial from date 
+
+		newEndDate = finalDate + relativedelta(years=1) # to get new finincial To date calculate one year difference
+	    	newFinancialTo = newEndDate.strftime("%d-%m-%Y") # get new financial To date 
+		return [newFinancialFrom,newFinancialTo]
+
+	
+	
+	def xmlrpc_rollover(self,queryParams,client_id):
+		"""
+		* Purpose:
+			- This function is to forward the closing balance of current year 
+			  to next financial year as opening balance 
+			- it will first get the all accountname and corrosponding closing 
+			  balance of current financial year.
+			- then its create the schema and dump of current year's database
+			  and then get the reverse pattern match from both as save to file
+			  db.dump
+			- then from db.dump it will only give the dump of ``account`` ``subgroups``
+			  and ``organisation`` table 
+			- then ``rpc_Deploy`` function will deploy new databse for given
+			  newFinancialTo date and Organisation and OrganisationType
+			  where ``newFinancialFrom`` date will calculate by adding one day to 
+			  current ``financialTo`` date
+			- and the restore all the values of ``account`` ``subgroups`` and
+			  ``organisation``
+			- update ``openingbalance`` of the restored ``account`` table with 
+			  the calculated ``closingbalance``.
+			- after restoring values it also update ``rolloverflag`` of previous 
+			  organisation as ``1`` , so that organisation should not rollover again
+		* Input: 
+		 	- [organisationName,financialFrom,financialTo],client_id
+		 	
+		* Output:
+			- boolean newOrganisaionFromDate
+			- created new financile year and database 
+			- restore accounts its closingbalance as openingbalance and subgroups 
+		"""
+	
+		organisation = rpc_organisation.organisation()
+		financialFrom = queryParams[1] # get financial from date 
+		financialTo = queryParams[2] # get financial to date
+		
+		
+		NewFinancialYear = self.newFinancialYears([financialFrom,financialTo])
+		
+		orgType = organisation.xmlrpc_getorgTypeByname([queryParams[0]],client_id)
+		
+	##########################################################
+		account = rpc_account.account()
+		report = rpc_reports.reports()
+		accounts = account.xmlrpc_getAllAccountNames(client_id)
+		rollOverAccounts = {}
+		for acc in accounts:
+			
+			closingRow = report.xmlrpc_calculateBalance([acc,queryParams[1],queryParams[2],\
+									queryParams[2]],client_id)
+			# [group_name,bal_brought,curbal,total_DrBal,total_CrBal,opening_baltype,baltype]
+			closing_balance = 0.00
+			#print acc
+			if (str(closingRow[6])  == "Cr" 
+				and (str(closingRow[0])== "Current Asset" 
+				or str(closingRow[0])== "Fixed Assets" 
+				or str(closingRow[0])== "Investment" 
+				or str(closingRow[0])== "Loans(Asset)" 
+				or str(closingRow[0])== "Miscellaneous Expenses(Asset)"
+				)
+				):
+			
+				closing_balance = -float(closingRow[2])
+				rollOverAccounts[acc] = closing_balance
+			
+			if (str(closingRow[6])  == "Dr" 
+				and  (str(closingRow[0])== "Current Asset" 
+				or str(closingRow[0])== "Fixed Assets" 
+				or str(closingRow[0])== "Investment" 
+				or str(closingRow[0])== "Loans(Asset)" 
+				or str(closingRow[0])== "Miscellaneous Expenses(Asset)"
+				
+				)):
+			
+				closing_balance = float(closingRow[2])
+				rollOverAccounts[acc] = closing_balance
+			
+			if (str(closingRow[6])  == "Cr"
+				and  (str(closingRow[0])== "Corpus" 
+				or str(closingRow[0])== "Capital" 
+				or str(closingRow[0])== "Current Liability" 
+				or str(closingRow[0])== "Loans(Liability)" 
+				or str(closingRow[0])== "Reserves")):
+			
+				closing_balance = float(closingRow[2])
+				rollOverAccounts[acc] = closing_balance
+			
+			if (str(closingRow[6])  == "Dr"
+				and  (str(closingRow[0])== "Corpus" 
+				or str(closingRow[0])== "Capital" 
+				or str(closingRow[0])== "Current Liability" 
+				or str(closingRow[0])== "Loans(Liability)"
+				or str(closingRow[0])== "Reserves")):	
+			
+				closing_balance = -float(closingRow[2])
+				rollOverAccounts[acc] = closing_balance
+	
+		
+		profitloss= report.xmlrpc_getBalancesheetDisplay([queryParams[1],queryParams[1],queryParams[2],"balancesheet",orgType,None],client_id)
+		
+		Flag = profitloss[0]
+		netFlag = profitloss[3]
+		netPL = '%.2f'%(float(profitloss[1]))
+		netOpening = '%.2f'%(float(profitloss[2]))
+		connection = dbconnect.engines[client_id].connect()
+		Session = dbconnect.session(bind=connection)
+		connection = dbconnect.engines[client_id].raw_connection()
+		dbconnect.engines[client_id].execute("delete from profit_loss;")
+		connection.commit()
+		Session.add(dbconnect.ProfitLoss(Flag,netPL))
+		Session.commit()
+		database = dbconnect.getDatabaseName([queryParams[0],financialFrom,financialTo])
+	
+                #open("/ABT/abt/db/dump.sql", "a")
+                os.chdir("/ABT/abt/db/")
+               
+                #try:
+                self.dump_to_file(connection, filename='dump.sql')
+                if os.path.exists("/ABT/abt/db/db_dump.dump") == False:
+                        pass
+                else:
+                        os.remove("/ABT/abt/db/db_dump.dump")
+                
+                #except:
+                        ##print "problem in dumping database"
+
+                try:
+                        
+                        os.system("grep -i \"insert\" dump.sql > insert_schema.sql")
+                        os.system("grep -ir \"account\" insert_schema.sql >> db_dump.dump")
+                        os.system("grep -ir \"subgroups\" insert_schema.sql >> db_dump.dump")
+                        os.system("grep -ir \"organisation\" insert_schema.sql >> db_dump.dump")
+                        os.system("grep -ir \"users\" insert_schema.sql >> db_dump.dump")
+                        os.system("grep -ir \"flags\" insert_schema.sql >> db_dump.dump")
+                        os.system("grep -ir \"profit_loss\" insert_schema.sql >> db_dump.dump")
+                except:
+                        print "grep not working"
+
+                
+		################################################################
+		
+		connection = dbconnect.engines[client_id].raw_connection()
+		dbconnect.engines[client_id].execute("delete from profit_loss;")
+		connection.commit()
+		Session.add(dbconnect.ProfitLoss(netFlag,netOpening))
+		Session.commit()
+		
+		Session.close()
+		dbconnect.engines[client_id].dispose()
+		
+		del dbconnect.engines[client_id]
+		self.client_id = self.xmlrpc_Deploy([queryParams[0],NewFinancialYear[0],NewFinancialYear[1],orgType])
+	
+		
+		newDatabase = dbconnect.getDatabaseName([queryParams[0],NewFinancialYear[0],NewFinancialYear[1]])
+		
+		#print "deployment is done and the new dbname is " + newDatabase
+		connection = dbconnect.engines[self.client_id[1]].raw_connection()
+		dbconnect.engines[self.client_id[1]].execute("delete from subgroups;")
+		connection.commit()
+		dbconnect.engines[self.client_id[1]].execute("delete from flags;")
+		connection.commit()
+		#try:
+		os.chdir("/ABT/abt/db")
+                self.restore_db(connection, db_file = newDatabase, filename = 'db_dump.dump')
+		for account in rollOverAccounts.keys():
+			connection = dbconnect.engines[self.client_id[1]].raw_connection()
+				
+			editStatement = 'update account set openingbalance = '+str(rollOverAccounts[account])+\
+						' where accountname = "' + account + '"'
+			dbconnect.engines[self.client_id[1]].execute(editStatement)
+	
+			connection.commit()
+		queryParams.append(database) #dbname
+		queryParams.append("1") #rollover flag
+		# parsing abt.xml file to update rollover flag from '0' to '1'
+		self.xmlrpc_writeToXmlFile(queryParams,"/ABT/abt/abt.xml");
+		Session.close()
+			
+		#except:
+			##print "in rollover exception"
+		
+		return "rollover"
+		
+	def xmlrpc_completeFinancialYear(self,queryParams):
+		
+		financialFrom = queryParams[0] # get financial from date 
+		financialTo = queryParams[1] # get financial to date
+		
+		
+		NewFinancialYear = self.newFinancialYears([financialFrom,financialTo])
+		#print NewFinancialYear
+		#print NewFinancialYear[0]
+		#print NewFinancialYear[1]
+		############# to get current system date #############
+		
+		now = datetime.datetime.now()
+		if now >= datetime.datetime.strptime(str(NewFinancialYear[0]),"%d-%m-%Y"):
+			return "true"	
+		else:
+			return "false"
+	def xmlrpc_existRollOver(self,queryParams):
+		"""
+		Purpose:
+			- This is to check if given organisation has rollovered 
+			- if it return ``rollover_exit`` then it cannot rollover
+			  again
+			- else it return ``rollover_notexist`` then it is capable 
+			  to rollover to next financial year
+		Input:
+			- orgname,financilefrom,financialto
+			
+		Output: 
+			- if rolloverflag is ``1`` then ``rollover_exit``
+			- else rollover_notexist
+		"""
+		orglist = dbconnect.getOrgList()
+		flaglist = []
+		for org in orglist:
+			orgname = org.find("orgname")
+			financialyear_from = org.find("financial_year_from")#DD-MM-YYYY
+			financialyear_to = org.find("financial_year_to")
+			if (orgname.text == queryParams[0]
+					and financialyear_from.text == queryParams[1]
+					and financialyear_to.text == queryParams[2]):
+				rolloverflag = org.find("rolloverflag").text
+		
+				if rolloverflag == str(1):
+			
+					return True
+				else:
+			
+				 	return False
+			else:
+				pass
+		 	
+def runabt():
+	"""
+	+ As we have imported all the nested XMLRPC resource,so that create one handler ``abt`` 
+	  calls another if a method with a given prefix is called.
+	+ and publish that handelr instance ``abt`` to server .
+	+ this is ``def runabt()`` which is outside ``class abt():``.	"""
+	import rpc_main
+	# create the instance of class abt
+	abt = rpc_main.abt()
+	groups=rpc_groups.groups()
+	abt.putSubHandler('groups',groups)
+
+	account=rpc_account.account()
+	abt.putSubHandler('account',account)
+
+	organisation = rpc_organisation.organisation()
+	abt.putSubHandler('organisation',organisation)
+
+	transaction=rpc_transaction.transaction()
+	abt.putSubHandler('transaction',transaction)
+
+	data=rpc_data.data()
+	abt.putSubHandler('data',data)
+
+	reports=rpc_reports.reports()
+	abt.putSubHandler('reports',reports)
+
+	user = rpc_user.user()
+	abt.putSubHandler('user',user)
+
+	getaccountsbyrule=rpc_getaccountsbyrule.getaccountsbyrule()
+	abt.putSubHandler('getaccountsbyrule',getaccountsbyrule)
+
+	print "initialising application"
+	
+	#publish the object and make it to listen on the given port through reactor
+	print "starting server"
+	reactor.listenTCP(7081, server.Site(abt))
+	#start the service by running the reactor.
+	reactor.run()
+	

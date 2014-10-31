@@ -1,0 +1,172 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2.7. Bank reconciliation &mdash; Aakash Business Tool 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Aakash Business Tool 1.0 documentation" href="../index.html" />
+    <link rel="up" title="2. How to Operate" href="how_to_operate.html" />
+    <link rel="next" title="2.8. Rollover" href="Rollover.html" />
+    <link rel="prev" title="2.6. Setting up preferences" href="Setting_up_preferences.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Rollover.html" title="2.8. Rollover"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Setting_up_preferences.html" title="2.6. Setting up preferences"
+             accesskey="P">previous</a> |</li>
+        <li><a href="user_guide.html">Aakash Business Tool 1.0 documentation</a> &raquo;</li>
+          <li><a href="how_to_operate.html" accesskey="U">2. How to Operate</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="section" id="bank-reconciliation">
+<h1>2.7. Bank reconciliation<a class="headerlink" href="#bank-reconciliation" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>When the user clicks on the Bank Reconciliation Statement under Masters menu,
+it pops up a dialog box.</li>
+</ul>
+<img alt="../_images/bank_reco_before1.png" class="align-center" id="abt-main-page" src="../_images/bank_reco_before1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li>A list of <tt class="docutils literal"><span class="pre">bank</span> <span class="pre">account</span></tt> names will be populated. The user selects one of the
+account names displayed and gives the <tt class="docutils literal"><span class="pre">from</span> <span class="pre">date</span></tt> and <tt class="docutils literal"><span class="pre">to</span> <span class="pre">date</span></tt> i.e the time
+period. By default it is organisation&#8217;s financial from date and to date.
+Change date as per the requirement.</li>
+<li>Check the first check box to view <tt class="docutils literal"><span class="pre">cleared+uncleared</span></tt> transactions and second
+one to view transactions with <tt class="docutils literal"><span class="pre">narrations</span></tt>.</li>
+<li>Press <tt class="docutils literal"><span class="pre">View</span></tt>.</li>
+<li>A Ledger for that period for the selected account will be displayed to the
+user with the fields: Date, Particulars, Reference Number, Debit Amount,
+Credit Amount, Clearance date &amp; Memo. This shall consist all the
+reconciled transactions with the clearance date and not-reconciled transactions
+along with all not-reconciled transactions from the start of the
+organisation (i.e start date of the company) to the entered <tt class="docutils literal"><span class="pre">to</span> <span class="pre">date</span></tt>.</li>
+</ul>
+<img alt="../_images/bank_reconciliation1.png" class="align-center" id="id1" src="../_images/bank_reconciliation1.png" style="width: 350pt; height: 200pt;" />
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">Total</span> <span class="pre">Debit</span></tt> &amp; <tt class="docutils literal"><span class="pre">Total</span> <span class="pre">Credit</span></tt> are displayed in the last row of the table.</li>
+<li>Bank Reconciliation Statement is located at the bottom of the table.</li>
+</ul>
+<img alt="../_images/bank_statement.png" class="align-center" id="id2" src="../_images/bank_statement.png" style="width: 350pt; height: 200pt;" />
+<ul>
+<li><p class="first">If the user wishes to reconcile now, he clicks the <tt class="docutils literal"><span class="pre">Clearance</span> <span class="pre">date</span></tt> column.
+The clearance date field and memo are the <tt class="docutils literal"><span class="pre">Text</span> <span class="pre">input</span></tt> areas for the user to
+enter valid data.</p>
+</li>
+<li><p class="first">The user enters the date and some text in the memo (if he wishes to) and
+clicks on <tt class="docutils literal"><span class="pre">Save</span></tt> button(located at the title bar).</p>
+</li>
+<li><p class="first">There are 3 conditions to decide if the transaction has to be reconciled or not.</p>
+<p><strong>Condition 1:</strong> If clearance date has been entered and memo field is empty,
+the transaction is cleared i.e reconciled.
+<strong>Condition 2:</strong> If clearance date has NOT been entered by the user, then, this
+transaction will be reconciled in the future.</p>
+<p>On clicking <tt class="docutils literal"><span class="pre">Save</span></tt>, the transactions which fall into Condition 1 will be the
+only ones which will be reconciled.</p>
+</li>
+<li><p class="first">So the <tt class="docutils literal"><span class="pre">Bank</span> <span class="pre">Reconciliation</span> <span class="pre">Statement</span></tt> will get updated automatically.</p>
+</li>
+<li><p class="first">Click on the table row to see the details of the transaction. In accounting
+terms this fuctionality is called <tt class="docutils literal"><span class="pre">Drilldown</span></tt>.</p>
+</li>
+<li><p class="first">In options menu two features are provided: export report in PDF or CSV format.</p>
+</li>
+<li><p class="first">To change the input informations, user can click on button present
+in top-left corner of the screen.</p>
+</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Setting_up_preferences.html"
+                        title="previous chapter">2.6. Setting up preferences</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Rollover.html"
+                        title="next chapter">2.8. Rollover</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/user/Bank_reconciliation.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Rollover.html" title="2.8. Rollover"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Setting_up_preferences.html" title="2.6. Setting up preferences"
+             >previous</a> |</li>
+        <li><a href="user_guide.html">Aakash Business Tool 1.0 documentation</a> &raquo;</li>
+          <li><a href="how_to_operate.html" >2. How to Operate</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, androportal.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
